@@ -1,0 +1,37 @@
+{% load staticfiles %}
+ <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+<div class="panel panel-info ">
+    <div class="panel-heading">
+        <h1><font color="black">
+            <span class="glyphicon glyphicon-book">
+            </span>
+           Task Manager
+            <span class="glyphicon glyphicon-book">
+            </span>
+             </font>
+        </h1>
+         </div>
+<h1>Авторизация пользователя</h1>
+<div class="panel-body">
+<form action="#" method="POST">
+    {% if form.errors %}
+<p class="text-warning">Ваше имя пользователя и пароль не совпадают. Пожалуйста, попробуйте еще раз..</p>
+{% endif %}
+    {% csrf_token %}
+    <p><h4><span >Логин</span></h4></p>
+    {{ form.errors.username }}
+    <p>{{ form.username }}</p>
+    <p><h4><span >Пароль</span></h4></p>
+    {{ form.errors.password }}
+    <p>{{ form.password }}</p>
+    <button type="submit" >Войти</button>
+</form>
+    <a href="{% url 'index' %}" >На главную</a>
+</div>
+    </div>
+<div id="particles-js"></div>
+<div class="count-particles"> <span class="js-count-particles">
+    </span> particles </div>
+<script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="http://threejs.org/examples/js/libs/stats.min.js"></script>
+<script src="{% static 'particles.js' %}"></script>

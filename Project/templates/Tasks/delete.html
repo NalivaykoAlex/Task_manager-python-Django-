@@ -1,0 +1,30 @@
+{% load staticfiles %}
+ <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+
+<div class="panel panel-info ">
+    <div class="panel-heading">
+        <h1><font color="black">
+            <span class="glyphicon glyphicon-book">
+            </span>
+            Task Manager
+            <span class="glyphicon glyphicon-book">
+            </span>
+            </font>
+        </h1>
+         </div>
+<div class="panel-body">
+<h1>Удалить</h1>
+
+<form id="delete" action="{% url 'delete' pk=task.id%}" method="post">
+    {% csrf_token %}
+    <h2><span>Вы действительно хотите удалить "{{ object }}"?</span></h2>
+    <br>
+    <button>Удалить
+    </button>
+
+    <a href="{% url 'index' %}">Не удалять</a>
+
+</form>
+    <a href="{% url 'index' %}" >На главную</a>
+</div>
+</div>

@@ -1,0 +1,37 @@
+{% load staticfiles %}
+ <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h1><font color="black">
+            <span class="glyphicon glyphicon-book">
+            </span>
+             Task Manager
+            <span class="glyphicon glyphicon-book">
+            </span>
+            </font>
+        </h1>
+         </div>
+
+<div class="panel-body">
+<h1>Изменить задачу</h1>
+    <br>
+<form enctype="multipart/form-data" action="#" method="POST" class="form">
+    {% csrf_token %}
+    <p><h4><span>Задача</span></h4></p>
+    {{ form.errors.name }}
+    <p>{{form.name}}</p>
+    <p><h4><span>Описание задачи</span></h4></p>
+    {{ form.errors.detail }}
+    <p>{{form.detail }}</p>
+    <p><h4><span>Задача для:</span></h4></p>
+    <p>{{form.assigned_to_user}}</p>
+    <p><h4><span>Задача выполнена:</span></h4> {{form.completed}} </p>
+
+       <button>
+           <h5> Изменить</h5>
+       </button>
+
+</form>
+    <a href="{% url 'index' %}">На главную</a>
+</div>
+    </div>

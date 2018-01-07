@@ -1,0 +1,144 @@
+
+{% load staticfiles %}
+ <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <div class="panel panel-info">
+    <div class="panel-heading">
+        <h1><font color="black">
+            <span class="glyphicon glyphicon-book">
+            </span>
+            Task Manager
+            <span class="glyphicon glyphicon-book">
+            </span>
+            </font>
+        </h1>
+         </div>
+{% if not user.is_active %}
+<div class="jumbotron">
+<h2>Вы не авторизованы</h2>
+<p>Пожалуйста авторизуйтесь или зарегистрируйтесь</p>
+<p><a href="{% url 'login' %}">Войти &raquo;</a></p>
+{% endif %}
+{% if user.is_active %}
+<div class="panel-body">
+<p>Вы вошли как: <b><span>{{user}}</span></b></p>
+{% if user.is_superuser %}
+<p><strong>Вы в режиме администрирования</strong></p>
+{% endif %}
+<p><a href="{% url 'logout' %}" class="text-warning" >Выйти &raquo;</a></p>
+{% endif %}
+    <p><a href="{% url 'register' %}" class="text-warning">Регистрация &raquo;</a></p>
+</div>
+
+{% if user.is_active %}
+<div class="panel-body">
+
+     <p><a href="{% url 'create' %}" >Создать задачу &raquo;</a></p>
+    <p><a href="{% url 'author_task' %}" >Задачи созданные пользователем&raquo;</a></p>
+    <p><a href="{% url 'to_author_task' %}" >Задачи для пользователя &raquo;</a></p>
+    <a href="{% url 'index' %}"  >На главную &raquo;</a>
+
+<div class="panel-body">
+
+
+<h2><strong>{{ name_table }}</strong></h2>
+    {% if object_list %}
+
+<table class="table">
+        <th>
+            Название задачи
+        </th>
+        <th>
+            Завершённость задачи
+        </th>
+        <th>
+            Дата создания
+        </th>
+        <th>
+            Дата завершения
+        </th>
+        <th>
+            Автор задачи
+        </th>
+        <th>
+            Задача назначена на
+        </th>
+        <th>
+            Удалить
+        </th>
+        <th>
+            Изменить
+        </th>
+
+{% for task in object_list %}
+<table class="table">
+    <tr>
+        <td>
+            <p><a href="{% url 'detail' pk=task.id %}" role="button">
+                    {{ task.name }}</a></p>
+        </td>
+            {% if task.completed %}
+               <td><font color="blue">Задача завершена</font></td>
+            {% else %}
+                <td><font color="red">В процессе выполнения</font></td>
+            {% endif %}
+        <td>
+            <h5>
+            {{ task.date }}
+            </h5>
+        </td>
+        <td>
+            <h5>
+            {{ task.date_off }}
+            </h5>
+        </td>
+        <td>
+            <h5>
+            {{ task.user }}
+            </h5>
+        </td>
+        <td>
+            <h5>
+            {{ task.assigned_to_user }}
+            </h5>
+        </td>
+
+
+        <td>
+           <form action="{% url 'delete' pk=task.id %}" method="GET">
+                 {% if not user.is_superuser %}
+                <button disabled class="btn btn-danger btn-lg">
+                    <p class="glyphicon glyphicon-remove"></p>
+                </button>
+                {% else %}
+                <button class="btn btn-danger btn-lg">
+                    <p class="glyphicon glyphicon-remove"></p>
+                </button>
+                {% endif %}
+            </form>
+        </td>
+        <td>
+            <form action="{% url 'update' pk=task.id %}" method="GET">
+             {% if task.completed and not user.is_superuser or task.user != user and not user.is_superuser %}
+                <button disabled class="btn btn-info btn-lg">
+                    <p class="glyphicon glyphicon-wrench"></p>
+                </button>
+                {%else%}
+                <button class="btn btn-info btn-lg">
+                    <p class="glyphicon glyphicon-wrench"></p>
+                </button>
+                {%endif%}
+            </form>
+        </td>
+    </tr>
+            {% endfor %}
+  {% else %}
+         <h1 class=text-warning>Созданных задач нет,создайте задачу(:</h1>
+         <img src="{% static 'images/koshka.jpeg' %}" alt="КОШКА">
+         {% endif %}
+</table>
+    {% endif %}
+</table>
+</div>
+    </div>
+
